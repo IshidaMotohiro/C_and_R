@@ -1,0 +1,933 @@
+# 第二版  2014年3月29日
+
+############################################################
+#                   第4章ベクトルの操作                    #
+############################################################
+
+
+
+
+  ## ----- SECTION 034 文字列ベクトルを作成する
+
+# 空の文字列を作成
+x <- character (1)
+x
+# 「vector」関数を使った空の文字列の作成
+x1 <- vector ("character", 1)
+x1
+x2 <- "ABC"
+x2
+
+# 引用符はシングルコーテーションでもかまわない
+y <- 'ABC'
+y
+
+# ダブルコーテーションとスペースを含む文字列「"A" "B" "C"」を初期化
+x <- '"A" "B" "C"'
+x
+
+#  シングルーテーションとスペースを含む文字列「'A' 'B' 'C'」を初期化
+x <- "'A' 'B' 'C'"
+x
+
+#  エスケープを使う場合
+
+x <- "\"A\" \"B\" \"C\""
+x
+
+
+# プロットのキャプションなどに使うとバックスラッシュは表示されない
+cat (x, "\n")
+"A" "B" "C"
+plot (1:10, main = x)
+length (x)
+
+# 3つの文字列を要素とするベクトル
+(y <- c ("A", "B", "C"))
+cat (y, "\n")
+length (y)
+
+LETTERS
+
+letters
+
+month.name
+
+month.abb
+
+LETTERS [1:10]
+noquote (x)
+
+
+
+
+
+
+  ## ----- SECTION 035 文字列を規則的に合成したベクトルを作成する
+# デフォルトでは間にスペースを挟む
+paste ("ID", 1:10)
+
+# 「sep」引数を指定してスペースを省く
+paste ("ID", 1:10, sep = "")
+
+# 1つの文字列（要素数1のベクトル）にまとめてしまう
+paste ("ID", 1:10, sep = "", collapse = ",")
+
+FeMa <- c ("女", "男")
+FeMa
+
+outer (FeMa, 1:5, paste, sep = "の")
+
+
+# ベクトルを指定すると、足りない方が必要なだけ繰り返し使われる
+paste (c ("F", "M"), 1:8, sep = "")
+
+
+
+
+
+  ## ----- SECTION 036 文字列オブジェクトの文字数を数える
+
+x <- ""
+# 「x」が空かどうかを確かめる
+nzchar (x)
+nchar (x)
+
+y <- "R逆引き"
+# デフォルトでは文字数
+nchar (y)
+# 「type」引数でバイト単位
+nchar (y, type = "bytes")
+# 「type」引数で表示幅単位
+nchar (y, type = "width")
+
+# 要素が複数ある場合はそれぞれの文字数が返る
+(z <- c (x, "ABC"))
+nchar (z)
+# 要素に欠損値「NA」が含まれる場合には注意
+z.na <- c (x, NA)
+nchar (z.na)
+is.na (z.na)
+
+
+
+
+
+  ## ----- SECTION 037 指定位置の文字列を抽出する
+x <- "R逆引き"
+y <- "ハンドブック"
+
+# 2文字目から3文字目を抽出
+substr (x, start = 2, stop = 3)
+
+# 2つの文字列を対象に、それぞれ2文字から5文字目、4文字から7文字目を抽出
+substr (c (x, y), start = c (2, 5), stop = c (4, 7))
+
+# 代入による置き換え。この操作は元のベクトルを変更する
+substr (x, start = 2, stop = 3) <- "X"
+x
+
+# 複数のベクトルは、一度単独のオブジェクトにまとめる
+z <- c (x, y)
+substr (z , start = c (2, 5), stop = c (4, 7)) <- c ("X", "Y")
+z
+
+# 以下はエラーになるので注意
+# substr (c (x, y), start = c (2, 5), stop = c (4, 7)) <- c ("X", "Y")
+
+
+z <- "RアールSアール"
+substr (z, 2, 5)
+
+# 2文字目から5文字目を置き換える？
+substr (z, 2, 5) <- "="
+z
+# 右辺が1文字なので1文字だけ置き換えられた
+
+
+x <- "R逆引き"
+y <- "ハンドブック"
+
+# 同機能の別関数「substring」
+substring (x, first = )
+
+# アルファベット大文字
+(str1 <- paste(LETTERS, collapse = ""))
+
+# 「substr」の場合は位置ベクトルの一部を利用
+substr (str1, c (2,5), c (3,6))
+# 「substring」の場合は位置ベクトルをすべて利用
+substring (str1, c (2,5), c (3,6))
+
+
+
+
+  ## ----- SECTION 038 指定の文字を区切りとして文字列を分割する
+
+
+x <- "R逆引き"
+
+strsplit(x, split = "逆")
+
+strsplit(x, split = "")
+
+y <- c("R逆引き","C&R")
+
+strsplit(y, NULL)
+
+strsplit(y, split = "逆")
+
+(z <- strsplit(y, c("逆", "&")))
+
+z[[2]]
+
+
+# 「.」は正規表現ですべての文字を指定したことになる
+strsplit (x, ".")
+# すべての文字が区切り文字に利用されるので文字の数だけ「""」が表示される
+# 「fixed」引数を指定して「.」を文字通りに解釈する
+strsplit (x, ".", fixed = TRUE)
+# 「x」に「.」は含まれていないので分割されない
+# リストをベクトル化する。なお「split」引数名を省略した
+unlist (strsplit (x, "逆"))
+
+
+
+
+
+
+  ## ----- SECTION 039  文字列を指定の長さに切り詰める
+
+z <- c ("R逆引きハンドブック", "石田基広")
+# 「width」は表示幅。日本語では1文字を2とカウント
+# 日本語で奇数幅を指定すると切り捨てられる
+
+strtrim (z, width = 2)
+strtrim (z, width = 3)
+strtrim (z, width = c(4, 2))
+
+
+
+
+
+  ## ----- SECTION 040  文字列を指定したパターンで検索する
+jp.str <- c ("山本山太郎", "山田太郎", "山田幸之", "本山幸之助")
+# 「山田」を検索し、添字番号を出力
+(j <- grep ("山田", jp.str))
+jp.str[j]
+
+# 添字番号ではなく文字そのものを出力
+grep ("山田", jp.str, value = TRUE)
+
+# 文字列の最初が一致．Perl 互換の検索
+(j <- grep ("^本山", jp.str, perl = TRUE))
+
+# UTF-8環境（MacやLinux）では以下でもよい（R-2.15以降ではWindowsでも可能）
+# (j <- grep ("\\<本山", jp.str))
+# 文字列の最後が一致
+(j <- grep ("幸之$", jp.str))
+# UTF-8環境（MacやLinux）では以下でもよい（R-2.15以降ではWindowsでも可能）
+# (j <- grep ("幸之\\>", jp.str))
+
+# Perl互換を使った例
+x <- c("AB2C", "DEF", "ghi")
+grep("[[:upper:]]", x, perl = TRUE, value = TRUE)
+#  以下でも動作する環境がある
+grep("[:upper:]", x, value = TRUE)
+#  
+
+
+# 検索文字列の一致した位置と長さ
+(x <- paste (c (LETTERS, LETTERS), collapse = "") )
+
+# 最初に一致した位置とその長さ
+regexpr ("BCD", x)
+
+# 一致したすべての位置とそれぞれの長さ
+gregexpr ("BCD", x)
+
+# URLを含む文字列
+str <- "これはhttp://cran.r-project.org/で、あれはhttp://www.google.co.jp/です。"
+# URLを取り出す単純な例
+# tmp <- gregexpr ("https?://.+/(.+/)*?", str)
+tmp <- gregexpr ("https?://.+?/(.+/)*?", str, perl = TRUE) # 荒引健氏による修正
+# tmp <- gregexpr ("https?://[^/]+/([^/]+/)*?", str, perl = TRUE)
+# （URLが / で終わることが前提） 荒引健氏による修正  http://d.hatena.ne.jp/a_bicky/
+
+substring(str, tmp[[1]], tmp[[1]] + attr (tmp[[1]], 'match.length') -1)
+
+  ## エスケープの利用（本書には掲載していません）
+  (x <- c("AA","B.", "C\\C"))
+  grep(".", x, value = TRUE)
+  grep("\\.", x, value = TRUE)
+
+
+jp <- "山本"
+#  Windowsでの文字コードはCP932
+charToRaw(jp)
+
+# ところが文字コードがUTF-8に変換される
+(jp2 <- gsub("山","川",jp))
+charToRaw(jp2)
+
+#  を指定するとCP932として処理される
+(jp3 <- gsub("山","川",jp,fixed = TRUE))
+charToRaw(jp3)
+
+
+
+alice <- "Alice was beginning to get very tired of sitting by her sister on the bank,
+and of having nothing to do:"
+alice.vec <- unlist (strsplit (alice, split = "[[:space:]]+|[[:punct:]]+"))
+head (alice.vec)
+
+table (alice.vec)
+
+x <- c ("納豆", "醤油")
+grep ("納", x) # R-2.15 以降  Windowsでもエラーになりません。
+
+charToRaw ("納")
+charToRaw ("[")
+
+x <- c("ABC", "D3", "EF G")
+grep("\\s", x)
+grep("\\.", x)
+
+
+
+
+
+  ## ----- SECTION 041 文字列を指定したパターンで置換する
+jp.str <- c ("石田基広", "石田太郎", "山田太郎", "幸村幸雄")
+# 「石」を「山」に置換
+sub ("石", "山", jp.str)
+
+# 「石」あるいは「山」を「川」に置換
+sub ("[石山]", "川", jp.str)
+
+# 「石田」あるいは「山田」を「佐藤」に置換
+sub ("石田|山田", "佐藤", jp.str)
+
+# 「幸」を「鈴」に置換
+sub ("幸", "鈴", jp.str)
+
+# 「幸」を「鈴」に一括置換
+gsub ("幸", "鈴", jp.str)
+
+y <- "abcDA"
+# 一致したパターンを大文字に変える.  Perl互換を指定する
+gsub ("(ab)", "\\U\\1", y, perl = TRUE)
+# 最初の参照を大文字に、2つ目の参照を小文字に変える
+gsub ("(ab)c(DA)", "\\U\\1 \\L\\2", y, perl = TRUE)
+
+(z <- paste ("ID", 1:10, sep = ""))
+# 最後の数字を削除する
+gsub ("[0-9]$", "", z)
+# 2桁以上ある場合
+gsub ("[0-9]+$", "", z)
+
+
+
+
+  ## ----- SECTION 042  文字列の文字コードを確認する/指定の文字コード体系に変更する
+
+#文字列の文字コードを確認。以下はWindows環境での出力
+charToRaw ("ぁあいぃうぅ")
+#  [1] 82 9f 82 a0 82 a2 82 a1 82 a4 82 a3
+# 2つ目の「あ」はShift-Jis(CP932)では16進法で「82 a0」
+
+# UTF-8での文字コード
+# 「あ」はUTF-8では16進法でe3 81 82
+# 「enc2utf8」関数で文字列の文字コードをUTF-8変換して表示
+charToRaw (enc2utf8 ("ぁあいぃうぅ") )
+
+# 指定した文字列の文字コード体系を変更する
+y <- iconv ("あ", from = "CP932", to = "UTF-8")
+# charToRaw(enc2utf8("あ") ) と同じ
+# UTF-8での文字コードに変換されている
+charToRaw (y)
+
+# Unicode(UCS-2)でのコードを確認する
+# install.packages ("Unicode") # 最初にインストールする
+library ("Unicode")
+as.u_char (utf8ToInt ("あ"))
+
+# Windowsの場合、いったんUTF-8に変換する
+y <- enc2utf8 ("あ")
+# UCS-2による「あ」のコード
+as.u_char (utf8ToInt (y))
+
+
+
+x <- data.frame (Id = c ("もも", "くり", "かき"))
+write.table (x, file = "x.csv", fileEncoding = "UTF-8")
+getwd()
+
+# コネクションを開く
+out <- file ("utf8.csv", "w", encoding = "UTF-8")
+write.table(x, out)
+# コネクションを閉じる
+close (out)
+
+
+
+
+
+
+  ## ----- SECTION 044 因子を作成する
+x <- c ("A", "B", "C")
+(x <- rep (x, 3))
+# 因子化
+(y <- factor (x))
+
+# 通常の添字指定
+y [1:2]
+y [2]
+
+
+# 別ラベルを付ける
+(y <- factor (x, label = "alphabet"))
+str (y)
+# 水準数を確認
+nlevels (y)
+
+
+# 指定された水準数を指定の数だけ繰り返す
+(x <- gl (3, 5, labels = c ("上", "中", "下")))
+
+# 水準を追加する。ただし「"他"」に属するデータはない
+levels (x) <- c ("犬", "猿", "雉", "他")
+x
+# データのない水準は削除
+x [, drop = TRUE]
+
+
+
+
+
+  ## ----- SECTION 044  因子の水準に並び順を定義する
+# 水準が3で、それぞれ要素が5個のベクトル
+# 水準には並び順がある
+(x <- gl (3, 5, labels = c ("あ", "い", "う")) )
+levels (x)
+# 因子の並び順が分散分析などでは参照水準として利用される
+head (iris)
+
+
+levels (iris$Species)
+x.aov <- aov (Petal.Length ~ Species, data = iris)
+# 係数表を確認
+# この段階で参照水準（ベース）は"setosa"
+summary.lm (x.aov)
+
+# 参照の順を変更するつもりで名前を変更しても
+levels(iris$Species) <- c("Csetosa","Bversicolor", "Avirginica")
+str(iris$Species)
+x.aov2 <- aov (Petal.Length ~ Species, data = iris)
+# 参照水準（ベース）は"setosa"のまま
+summary.lm (x.aov2)
+
+# 参照の先頭水準の先頭（ベース）を入れ替える
+iris$Species <- relevel (iris$Species, "Avirginica" )
+levels (iris$Species)
+# もう一度係数表を確認
+# 参照水準が変更されている
+y.aov3 <- aov (Petal.Length ~ Species, data = iris)
+summary.lm (y.aov3)
+
+# 組み込みデータの水準を変更するとコピーが作成されている
+# コピーをいったん削除
+rm(iris)
+# 水準を平均値の大きさで並びかえる
+iris$Species <- reorder (iris$Species, iris$Sepal.Width, mean)
+levels (iris$Specie)
+
+w.aov <- aov (Petal.Length ~ Species, data = iris)
+summary.lm (w.aov)
+
+
+
+  ## ----- SECTION 046  使われていない因子の水準を削除する
+
+# irisデータから「versicolor」品種を除いた部分集合を抽出
+iris.sub <- iris [iris$Species != "versicolor", ]
+# しかし水準としては残っている
+levels (iris.sub$Species)
+# 使われていない水準を削除
+iris.sub <- droplevels (iris.sub)
+levels (iris.sub$Species)
+
+
+
+
+
+  ## ----- SECTION 047
+# 並び順とは別に大小関係がある
+# insectデータの因子水準には大小関係はない
+head (InsectSprays)
+
+levels (InsectSprays$spray)
+is.ordered (InsectSprays$spray)
+str (InsectSprays$spray)
+
+ins <- aov (count ~ spray, data = InsectSprays)
+summary (ins)
+
+summary.lm (ins)
+contrasts (InsectSprays$spray)
+
+
+# 大小関係を導入する
+InsectSprays$spray <- ordered (InsectSprays$spray,
+	levels = c("A", "B", "C", "D", "E", "F"))
+
+levels (InsectSprays$spray)
+is.ordered (InsectSprays$spray)
+str (InsectSprays$spray)
+
+ins <- aov (count ~ spray, data = InsectSprays )
+summary (ins)
+
+summary.lm (ins)
+
+contrasts (InsectSprays$spray)
+
+
+
+
+
+  ## ----- SECTION 048 因子の水準を自由に組み合わせる
+(a <- gl (2, 4, 8, labels = c ("treat", "ctrl")))
+(b <- gl (2, 1, 8, labels = c ("M", "F")))
+# aとbの組み合わせを作成
+(a.b <- interaction(a, b))
+levels (a.b)
+
+# 結合順序を替える
+(a.b2 <- interaction (a, b, lex.order = TRUE))
+levels (a.b2)
+
+
+
+
+
+  ## ----- SECTION 049 因子の水準ごとに関数を適用する
+# 「あやめ」データ
+head (iris)
+
+# 「aggregate」関数はデータフレームを返す
+(x <- aggregate (iris[1], iris[5], mean))
+# モデル式で指定する（R-3.0.0から利用可能）
+x <- aggregate (Sepal.Length ~ Species, data = iris, mean)
+
+# なお前節で因子の順序を変更している場合、テキストとは出力順が異なることがあります。
+#  その場合は、一時的に変更されているirisオブジェクトをもとに戻すため  rm(iris)  を実行してください。
+
+# 複数列に適用
+(x <- aggregate (iris[1:4], iris[5], mean))
+# モデル式で指定
+(x <- aggregate (. ~ Species, data = iris, mean))
+
+
+# 睡眠データ
+sleep
+attach (sleep) # データ列を登録し、個別のベクトルとして扱う
+ave (extra, group)
+
+# attach せずに実行する方法
+detach(sleep) # attachを解除
+ave (extra, group) # 実行できなくなる
+with (sleep, ave (extra, group))#「with」関数を適用
+
+# 複数の因子でグループ分け
+head (CO2)
+
+levels (CO2$Type); levels (CO2$Treatment)
+
+# 「Type」,「Treatment」の組み合わせごとに平均値を求める
+# 「tapply」関数はグループ分けに利用されたオブジェクトと同じ次元の配列を返す
+(z <- tapply (CO2$uptake, CO2 [c ("Type", "Treatment")], FUN = mean) )
+(y <- tapply ( iris [, 1], iris [5], mean))
+
+mode (y)
+# データフレームに変換
+as.data.frame (as.table (y), responseName = "mean" )
+
+
+# 簡素化を抑制するとリストを返す
+(y2 <- tapply(iris [, 1], iris [5], mean, simplify = FALSE) )
+
+mode (y2)
+
+# 「ave」関数でデータフレームと同じ行数のベクトルとして出力
+uptake.m <- ave (CO2$uptake, CO2 [c ("Type", "Treatment")], FUN = mean )
+# 水準の組み合わせに使われた添字
+index <- tapply (CO2$uptake, CO2 [c ("Type", "Treatment")] 
+index.fac <- interaction (CO2$Type, CO2$Treatment)
+
+data.frame(index = index, factor = index.fac, mean = uptake.m)
+
+
+
+# chickwts データにfeed水準ごとに順位をふった列を追加
+head(chickwts)
+chickwts$rank <- ave(chickwts$weight, chickwts$feed, FUN = rank)
+head(chickwts)
+
+# 水準の組み合わせに使われた添え字番号
+index <- tapply (CO2$uptake, CO2 [c ("Type", "Treatment")] )
+# 水準の組み合わせの名前を取得
+index.fac <- interaction (CO2$Type, CO2$Treatment)
+data.frame (index = index, factor = index.fac, mean = uptake.m)
+
+# 「by」関数はカテゴリごとに演算を適用する
+# 第1引数はデータフレーム、第2引数にグループ化因子を指定
+(iris.by <- by (iris [1:4], iris [5], colMeans) )
+
+# 配列であることを確認
+is.array (iris.by)
+
+## 以下は動作しない
+# by (iris [1:4], iris [5], mean) 
+
+
+
+
+
+  ## ----- SECTION 050 論理値の基礎
+x <- c (TRUE, TRUE)
+y <- c (FALSE, FALSE)
+
+# 1と0は論理値として扱いうる
+(z <- c (FALSE, TRUE, 1))
+
+# ベクトルの最初の要素だけが判定される
+x || y
+
+# ベクトルの要素ごとに比較が行われる
+x | y
+x && y
+x & y
+
+# 要素数が合わない場合、短かい方がリサイクルされる
+# ただし倍数になっていない場合は警告が表示される
+x & z
+
+!x # 論理値の反転
+
+
+
+
+
+
+  ## ----- SECTION 051 論理ベクトルを作成する
+# 空の論理オブジェクト
+x <- logical (1)
+x
+mode (x)
+# 上とまったく同じ操作
+(x1 <- vector ("logical", 1) )
+
+(x2 <- TRUE)
+(x3 <- T)
+(x4 <- c (TRUE, FALSE, T, F))
+
+# 0 以外の数値は「TRUE」に変換されます
+(y <- 0:5)
+[1] 0 1 2 3 4 5
+(y2 <- as.logical (y))
+
+# 文字列は「F」と「T」を除き「NA」に強制変換されます
+(y3 <- as.logical (LETTERS))
+
+
+
+
+  ## ----- SECTION 052 論理ベクトルを計算する
+(x <- 1:10)
+# 論理演算の結果
+(y <- x > 5 )
+sum (y)
+any (y)
+which (y)
+
+
+(mat <- matrix (1:9, nrow = 3))
+
+(mat > 5)
+
+(mat > 5) * 1
+
+
+
+
+
+
+  ## ----- SECTION 053 空のベクトルを初期化する
+
+# 空のベクトルを初期化
+x <- vector ()
+length( x )
+mode (x)
+str (x)
+is.null (x)
+
+(y <- vector (mode = "character", length = 3))
+(y <- vector ("numeric", 3))
+(y <- vector ("double", 3))
+(y <- vector ("integer", 3))
+(y <- vector ("complex", 3))
+(y <- vector ("raw", 3))
+
+# 初期化の効率性
+# 正規分布に従う乱数を用意
+tmp <- rnorm (10000)
+
+# 代入用のベクトルを用意。初期の要素数は1個
+z1 <- 0.0
+
+# 代入のたびにベクトルを拡張する
+system.time (
+ for(i in seq_along (tmp)){
+  z1 [i] <- tmp [i]
+ }
+)
+# 実行結果は環境によって異なります
+
+# 生成した乱数と同じサイズのベクトルを用意
+z2 <- vector ("double", length (tmp))
+
+system.time (
+ for(i in seq_along (tmp)){
+  z2 [i] <- tmp [i]
+ }
+)
+
+
+
+
+  ## ----- SECTION 054 ベクトルの要素数を取得・変更する
+(x <- 1:5) 
+length (x)
+
+# 要素数を広げる
+length (x) <- 10
+x
+# 要素数を切り詰める
+length (x) <- 6
+x
+
+
+
+
+  ## ----- SECTION 055  ベクトルの要素に名前を付ける
+(x <- 1:5)
+(names (x) <- LETTERS [1:5])
+# 「B」という名前の付いた要素
+x [names (x) == "B"]
+
+
+x <- 1:5
+(names (x) <- LETTERS [1:5])
+
+y <- 5:9
+
+(names (y) <- LETTERS [5:9])
+# 名前付きオブジェクトの演算
+x + y
+# 最初のベクトルの名前だけが使われる
+
+
+
+
+
+
+  ## ----- SECTION 056  ベクトルから要素を抽出する
+# 添字を使って抽出
+x <- LETTERS
+x [1:10] # 最初から10個を抽出
+
+x [c (1, 3, 5)]
+# アルファベットを一つおきに取り出す
+x [seq (1, 26, 2)]
+
+# 指定された添字の要素置換
+(x[1:5] <- letters [1:5])
+x
+
+# 指定された添字の要素を除外
+x <- x [-(1:15)]
+x
+
+#  連番ではない場合の削除方法
+(x <- x [ -c(2,4,6,8,10)])
+
+# x を数値ベクトルに変更
+x <- -5:5
+length(x)
+
+# 条件指定で抽出
+x [x > 0]
+# 論理演算子「&」と「|」を使う
+x [x < -2 & x > 2 ]
+x [x < -3 | x > 3 ]
+
+# 条件によって値を変える
+x [x < 0 ] <- NA
+x
+
+
+# [ ]演算子を使う
+z <- 1:5
+names (z) <- LETTERS [1:5]
+z
+
+z [3]
+
+z [[3]] # 
+
+z [ names (z) == "B" ]
+
+names (z) == "B"
+
+# BかDという名前がついた要素を出したい（意図した結果にならない例）
+z [names (z) == c ("B", "D")]
+
+# %in%演算子を使う
+z [names (z) %in% c ("B", "D")]
+names (z) %in% c ("B", "D")
+
+z [ !(names (z) %in% c ("B", "D"))]
+## z [ !names (z) %in% c ("B", "D") ]#丸括弧を省略
+
+x <- c(TRUE, FALSE)
+y <- c(TRUE, TRUE)
+
+!x | y
+!(x | y)
+
+
+
+
+  ## ----- SECTION 057 ベクトルから条件に適合する添字を取得する
+(x <- rep (c (TRUE, FALSE), 3))
+# 要素にTRUEが1つでも含まれるか
+any (x == TRUE)
+# 要素がTRUEの添字番号
+which (x == TRUE)
+
+# アルファベット「K」を含む要素番号
+which (LETTERS == "K")
+
+# 最大値最小値の添字
+y <- 5:10
+which.max (y)
+which.min (y)
+
+
+
+
+  ## ----- SECTION 058 ベクトルの要素を並べ替える
+# 1から10をランダムに並べたベクトル
+# ここでは乱数の種を指定します
+set.seed (1)
+(x <- sample (10) )
+# ソートされていないか
+is.unsorted (x)
+# ソートする
+sort (x)
+
+sort (x, decreasing = TRUE) # 降順
+rank (x)
+
+set.seed (2)
+(z <- sample (20) )
+sort (z) [9] ; sort (z) [11]
+
+
+set.seed (2)
+(z <- sample (20) )
+# 通常のソート
+sort (z)
+# もとベクトルをソートした時に9番目の値を基準に前後に振り分け
+sort.int (z, partial = 9 )
+# 9番目と11番目の値を基準に前後に振り分け
+sort.int (z, partial = c (9,11) )
+# 9番目と18番目の値を基準に前後に振り分け
+sort.int (z, partial = c(9,18) )
+
+set.seed (1)
+(x <- sample (10) )
+# 昇順に並べ替えた場合の添字
+order (x)
+sort.list (x)
+# 添字を使って並べ替える「sort(x)」に同じ
+x [order(x)]
+
+
+
+
+  ## ----- SECTION 059  ベクトルの要素を置き換える
+(x <- c (1:5, NA))
+# 3番目の要素を30に置き換える
+replace (x, 3, 30)
+# 2番目と3番目をそれぞれ置き換える
+y <- replace (x, c (2, 3), c (20, 30))
+y
+
+# 添字を使って置き換える
+# この場合も、ベクトルが変更される
+x [c (2, 3)] <- c (22, 33)
+x
+
+
+x [is.na (x) ] <- 0
+x
+
+replace (x, is.na (x), 0)
+
+
+
+
+  ## ----- SECTION 060 ベクトルに要素を追加する
+(x <- 1:5)
+# 末尾に結合
+(y <- c (x, 7:10))
+# 5番めの直後に6を挿入
+(z <- append (y, after = 5, 6))
+
+# 3番目の後に333と888をそれぞれ挿入
+(z <- append (y, after = 3, c(333, 888)))
+
+
+
+
+  ## ----- SECTION 061 ベクトルの要素の重複を調べる
+(x <- c (1:5, 3:7, 5:10))
+(y <- duplicated (x))
+# 重複している場所
+which (y)
+# 重複出現している要素
+x [y]
+
+
+z <- c (1, 2, 2, 2, 5, 5, 5, 5, 8, 2)
+# 同じ数値が繰り返される回数
+(z1 <- rle (z))
+
+# 復元する
+(inverse.rle (z1))
+
+
+
+
+
+  ## ----- SECTION 062  ベクトルの要素の重複を削除する
+x <- c (1, 2, 2, 2, 5, 5, 5, 5, 8, 2)
+unique (x)
+
+# 削除対象から一部の要素を外す
+unique (x, incomparables = 2 )
+
+
+
