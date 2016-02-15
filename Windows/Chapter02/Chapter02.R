@@ -218,7 +218,7 @@ attributes (z)
 
 class (z)
 
-x <- 1：10
+x <- 1:10
 attr (x, "dim") <- c(3, 3)
 
 dim (x) <- c (3, 3)
