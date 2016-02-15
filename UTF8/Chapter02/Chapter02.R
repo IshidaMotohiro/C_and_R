@@ -202,7 +202,6 @@ attr (z, "dim") <- c (4,3)
 # dim (z) <- c (4,3) でも同じ
 z
 
-attr (z,"names")
 
 # 次元に名前属性を与える
 attr (z, "dimnames") <- list (row = c ("r1", "r2", "r3", "r4"),
