@@ -56,7 +56,7 @@ month.name
 month.abb
 
 LETTERS [1:10]
-noquote (x)
+noquote (LETTERS)
 
 
 
