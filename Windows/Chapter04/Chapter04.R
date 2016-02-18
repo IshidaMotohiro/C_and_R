@@ -283,7 +283,15 @@ head (alice.vec)
 
 table (alice.vec)
 
+x <- c ("納豆", "醤油")
+grep ("納", x) # R-2.15 以降  Windowsでもエラーになりません。
 
+charToRaw ("納")
+charToRaw ("[")
+
+x <- c("ABC", "D3", "EF G")
+grep("\\s", x)
+grep("\\.", x)
 
 
 
