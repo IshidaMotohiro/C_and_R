@@ -350,7 +350,6 @@ charToRaw (y)
 # Unicode(UCS-2)でのコードを確認する
 # install.packages ("Unicode") # 最初にインストールする
 library ("Unicode")
-as.u_char (utf8ToInt ("あ"))
 
 # Windowsの場合、いったんUTF-8に変換する
 y <- enc2utf8 ("あ")
