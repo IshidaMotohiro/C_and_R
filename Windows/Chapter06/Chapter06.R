@@ -319,10 +319,10 @@ expand.grid (blood = c ("A", "AB", "B", "O"),
                   g = LETTERS [1:3] ))
 
 
-# 単純な列ごとの合計
+# 行ごとの合計
 rowSums (x [, -4])
 
-# 行ごとの合計
+# 列ごとの合計
 colSums (x [, -4])
 
 
