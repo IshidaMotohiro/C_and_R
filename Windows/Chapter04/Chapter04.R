@@ -1,48 +1,48 @@
-# 第二版  2014年3月29日
+# ����  2014�N3��29��
 
 ############################################################
-#                   第4章ベクトルの操作                    #
+#                   ��4�̓x�N�g���̑���                    #
 ############################################################
 
 
 
 
-  ## ----- SECTION 034 文字列ベクトルを作成する
+  ## ----- SECTION 034 ������x�N�g�����쐬����
 
-# 空の文字列を作成
+# ��̕�������쐬
 x <- character (1)
 x
-# 「vector」関数を使った空の文字列の作成
+# �uvector�v�֐����g������̕�����̍쐬
 x1 <- vector ("character", 1)
 x1
 x2 <- "ABC"
 x2
 
-# 引用符はシングルコーテーションでもかまわない
+# ���p���̓V���O���R�[�e�[�V�����ł����܂�Ȃ�
 y <- 'ABC'
 y
 
-# ダブルコーテーションとスペースを含む文字列「"A" "B" "C"」を初期化
+# �_�u���R�[�e�[�V�����ƃX�y�[�X���܂ޕ�����u"A" "B" "C"�v��������
 x <- '"A" "B" "C"'
 x
 
-#  シングルーテーションとスペースを含む文字列「'A' 'B' 'C'」を初期化
+#  �V���O���[�e�[�V�����ƃX�y�[�X���܂ޕ�����u'A' 'B' 'C'�v��������
 x <- "'A' 'B' 'C'"
 x
 
-#  エスケープを使う場合
+#  �G�X�P�[�v���g���ꍇ
 
 x <- "\"A\" \"B\" \"C\""
 x
 
 
-# プロットのキャプションなどに使うとバックスラッシュは表示されない
+# �v���b�g�̃L���v�V�����ȂǂɎg���ƃo�b�N�X���b�V���͕\������Ȃ�
 cat (x, "\n")
 "A" "B" "C"
 plot (1:10, main = x)
 length (x)
 
-# 3つの文字列を要素とするベクトル
+# 3�̕������v�f�Ƃ���x�N�g��
 (y <- c ("A", "B", "C"))
 cat (y, "\n")
 length (y)
@@ -63,48 +63,48 @@ noquote (LETTERS)
 
 
 
-  ## ----- SECTION 035 文字列を規則的に合成したベクトルを作成する
-# デフォルトでは間にスペースを挟む
+  ## ----- SECTION 035 ��������K���I�ɍ��������x�N�g�����쐬����
+# �f�t�H���g�ł͊ԂɃX�y�[�X������
 paste ("ID", 1:10)
 
-# 「sep」引数を指定してスペースを省く
+# �usep�v�������w�肵�ăX�y�[�X���Ȃ�
 paste ("ID", 1:10, sep = "")
 
-# 1つの文字列（要素数1のベクトル）にまとめてしまう
+# 1�̕�����i�v�f��1�̃x�N�g���j�ɂ܂Ƃ߂Ă��܂�
 paste ("ID", 1:10, sep = "", collapse = ",")
 
-FeMa <- c ("女", "男")
+FeMa <- c ("��", "�j")
 FeMa
 
-outer (FeMa, 1:5, paste, sep = "の")
+outer (FeMa, 1:5, paste, sep = "��")
 
 
-# ベクトルを指定すると、足りない方が必要なだけ繰り返し使われる
+# �x�N�g�����w�肷��ƁA����Ȃ������K�v�Ȃ����J��Ԃ��g����
 paste (c ("F", "M"), 1:8, sep = "")
 
 
 
 
 
-  ## ----- SECTION 036 文字列オブジェクトの文字数を数える
+  ## ----- SECTION 036 ������I�u�W�F�N�g�̕������𐔂���
 
 x <- ""
-# 「x」が空かどうかを確かめる
+# �ux�v���󂩂ǂ������m���߂�
 nzchar (x)
 nchar (x)
 
-y <- "R逆引き"
-# デフォルトでは文字数
+y <- "R�t����"
+# �f�t�H���g�ł͕�����
 nchar (y)
-# 「type」引数でバイト単位
+# �utype�v�����Ńo�C�g�P��
 nchar (y, type = "bytes")
-# 「type」引数で表示幅単位
+# �utype�v�����ŕ\�����P��
 nchar (y, type = "width")
 
-# 要素が複数ある場合はそれぞれの文字数が返る
+# �v�f����������ꍇ�͂��ꂼ��̕��������Ԃ�
 (z <- c (x, "ABC"))
 nchar (z)
-# 要素に欠損値「NA」が含まれる場合には注意
+# �v�f�Ɍ����l�uNA�v���܂܂��ꍇ�ɂ͒���
 z.na <- c (x, NA)
 nchar (z.na)
 is.na (z.na)
@@ -113,94 +113,94 @@ is.na (z.na)
 
 
 
-  ## ----- SECTION 037 指定位置の文字列を抽出する
-x <- "R逆引き"
-y <- "ハンドブック"
+  ## ----- SECTION 037 �w��ʒu�̕�����𒊏o����
+x <- "R�t����"
+y <- "�n���h�u�b�N"
 
-# 2文字目から3文字目を抽出
+# 2�����ڂ���3�����ڂ𒊏o
 substr (x, start = 2, stop = 3)
 
-# 2つの文字列を対象に、それぞれ2文字から5文字目、4文字から7文字目を抽出
+# 2�̕������ΏۂɁA���ꂼ��2��������5�����ځA4��������7�����ڂ𒊏o
 substr (c (x, y), start = c (2, 5), stop = c (4, 7))
 
-# 代入による置き換え。この操作は元のベクトルを変更する
+# ����ɂ��u�������B���̑���͌��̃x�N�g����ύX����
 substr (x, start = 2, stop = 3) <- "X"
 x
 
-# 複数のベクトルは、一度単独のオブジェクトにまとめる
+# �����̃x�N�g���́A��x�P�Ƃ̃I�u�W�F�N�g�ɂ܂Ƃ߂�
 z <- c (x, y)
 substr (z , start = c (2, 5), stop = c (4, 7)) <- c ("X", "Y")
 z
 
-# 以下はエラーになるので注意
+# �ȉ��̓G���[�ɂȂ�̂Œ���
 # substr (c (x, y), start = c (2, 5), stop = c (4, 7)) <- c ("X", "Y")
 
 
-z <- "RアールSアール"
+z <- "R�A�[��S�A�[��"
 substr (z, 2, 5)
 
-# 2文字目から5文字目を置き換える？
+# 2�����ڂ���5�����ڂ�u��������H
 substr (z, 2, 5) <- "="
 z
-# 右辺が1文字なので1文字だけ置き換えられた
+# �E�ӂ�1�����Ȃ̂�1���������u��������ꂽ
 
 
-x <- "R逆引き"
-y <- "ハンドブック"
+x <- "R�t����"
+y <- "�n���h�u�b�N"
 
-# 同機能の別関数「substring」
+# ���@�\�̕ʊ֐��usubstring�v
 substring (x, first = )
 
-# アルファベット大文字
+# �A���t�@�x�b�g�啶��
 (str1 <- paste(LETTERS, collapse = ""))
 
-# 「substr」の場合は位置ベクトルの一部を利用
+# �usubstr�v�̏ꍇ�͈ʒu�x�N�g���̈ꕔ�𗘗p
 substr (str1, c (2,5), c (3,6))
-# 「substring」の場合は位置ベクトルをすべて利用
+# �usubstring�v�̏ꍇ�͈ʒu�x�N�g�������ׂė��p
 substring (str1, c (2,5), c (3,6))
 
 
 
 
-  ## ----- SECTION 038 指定の文字を区切りとして文字列を分割する
+  ## ----- SECTION 038 �w��̕�������؂�Ƃ��ĕ�����𕪊�����
 
 
-x <- "R逆引き"
+x <- "R�t����"
 
-strsplit(x, split = "逆")
+strsplit(x, split = "�t")
 
 strsplit(x, split = "")
 
-y <- c("R逆引き","C&R")
+y <- c("R�t����","C&R")
 
 strsplit(y, NULL)
 
-strsplit(y, split = "逆")
+strsplit(y, split = "�t")
 
-(z <- strsplit(y, c("逆", "&")))
+(z <- strsplit(y, c("�t", "&")))
 
 z[[2]]
 
 
-# 「.」は正規表現ですべての文字を指定したことになる
+# �u.�v�͐��K�\���ł��ׂĂ̕������w�肵�����ƂɂȂ�
 strsplit (x, ".")
-# すべての文字が区切り文字に利用されるので文字の数だけ「""」が表示される
-# 「fixed」引数を指定して「.」を文字通りに解釈する
+# ���ׂĂ̕�������؂蕶���ɗ��p�����̂ŕ����̐������u""�v���\�������
+# �ufixed�v�������w�肵�āu.�v�𕶎��ʂ�ɉ��߂���
 strsplit (x, ".", fixed = TRUE)
-# 「x」に「.」は含まれていないので分割されない
-# リストをベクトル化する。なお「split」引数名を省略した
-unlist (strsplit (x, "逆"))
+# �ux�v�Ɂu.�v�͊܂܂�Ă��Ȃ��̂ŕ�������Ȃ�
+# ���X�g���x�N�g��������B�Ȃ��usplit�v���������ȗ�����
+unlist (strsplit (x, "�t"))
 
 
 
 
 
 
-  ## ----- SECTION 039  文字列を指定の長さに切り詰める
+  ## ----- SECTION 039  ��������w��̒����ɐ؂�l�߂�
 
-z <- c ("R逆引きハンドブック", "石田基広")
-# 「width」は表示幅。日本語では1文字を2とカウント
-# 日本語で奇数幅を指定すると切り捨てられる
+z <- c ("R�t�����n���h�u�b�N", "�Γc��L")
+# �uwidth�v�͕\�����B���{��ł�1������2�ƃJ�E���g
+# ���{��Ŋ�����w�肷��Ɛ؂�̂Ă���
 
 strtrim (z, width = 2)
 strtrim (z, width = 3)
@@ -210,68 +210,68 @@ strtrim (z, width = c(4, 2))
 
 
 
-  ## ----- SECTION 040  文字列を指定したパターンで検索する
-jp.str <- c ("山本山太郎", "山田太郎", "山田幸之", "本山幸之助")
-# 「山田」を検索し、添字番号を出力
-(j <- grep ("山田", jp.str))
+  ## ----- SECTION 040  ��������w�肵���p�^�[���Ō�������
+jp.str <- c ("�R�{�R���Y", "�R�c���Y", "�R�c�K�V", "�{�R�K�V��")
+# �u�R�c�v���������A�Y���ԍ����o��
+(j <- grep ("�R�c", jp.str))
 jp.str[j]
 
-# 添字番号ではなく文字そのものを出力
-grep ("山田", jp.str, value = TRUE)
+# �Y���ԍ��ł͂Ȃ��������̂��̂��o��
+grep ("�R�c", jp.str, value = TRUE)
 
-# 文字列の最初が一致．Perl 互換の検索
-(j <- grep ("^本山", jp.str, perl = TRUE))
+# ������̍ŏ�����v�DPerl �݊��̌���
+(j <- grep ("^�{�R", jp.str, perl = TRUE))
 
-# UTF-8環境（MacやLinux）では以下でもよい（R-2.15以降ではWindowsでも可能）
-# (j <- grep ("\\<本山", jp.str))
-# 文字列の最後が一致
-(j <- grep ("幸之$", jp.str))
-# UTF-8環境（MacやLinux）では以下でもよい（R-2.15以降ではWindowsでも可能）
-# (j <- grep ("幸之\\>", jp.str))
+# UTF-8���iMac��Linux�j�ł͈ȉ��ł��悢�iR-2.15�ȍ~�ł�Windows�ł��\�j
+# (j <- grep ("\\<�{�R", jp.str))
+# ������̍Ōオ��v
+(j <- grep ("�K�V$", jp.str))
+# UTF-8���iMac��Linux�j�ł͈ȉ��ł��悢�iR-2.15�ȍ~�ł�Windows�ł��\�j
+# (j <- grep ("�K�V\\>", jp.str))
 
-# Perl互換を使った例
+# Perl�݊����g������
 x <- c("AB2C", "DEF", "ghi")
 grep("[[:upper:]]", x, perl = TRUE, value = TRUE)
-#  以下でも動作する環境がある
+#  �ȉ��ł����삷���������
 grep("[:upper:]", x, value = TRUE)
 #  
 
 
-# 検索文字列の一致した位置と長さ
+# ����������̈�v�����ʒu�ƒ���
 (x <- paste (c (LETTERS, LETTERS), collapse = "") )
 
-# 最初に一致した位置とその長さ
+# �ŏ��Ɉ�v�����ʒu�Ƃ��̒���
 regexpr ("BCD", x)
 
-# 一致したすべての位置とそれぞれの長さ
+# ��v�������ׂĂ̈ʒu�Ƃ��ꂼ��̒���
 gregexpr ("BCD", x)
 
-# URLを含む文字列
-str <- "これはhttp://cran.r-project.org/で、あれはhttp://www.google.co.jp/です。"
-# URLを取り出す単純な例
+# URL���܂ޕ�����
+str <- "�����http://cran.r-project.org/�ŁA�����http://www.google.co.jp/�ł��B"
+# URL�����o���P���ȗ�
 # tmp <- gregexpr ("https?://.+/(.+/)*?", str)
-tmp <- gregexpr ("https?://.+?/(.+/)*?", str, perl = TRUE) # 荒引健氏による修正
+tmp <- gregexpr ("https?://.+?/(.+/)*?", str, perl = TRUE) # �r�������ɂ��C��
 # tmp <- gregexpr ("https?://[^/]+/([^/]+/)*?", str, perl = TRUE)
-# （URLが / で終わることが前提） 荒引健氏による修正  http://d.hatena.ne.jp/a_bicky/
+# �iURL�� / �ŏI��邱�Ƃ��O��j �r�������ɂ��C��  http://d.hatena.ne.jp/a_bicky/
 
 substring(str, tmp[[1]], tmp[[1]] + attr (tmp[[1]], 'match.length') -1)
 
-  ## エスケープの利用（本書には掲載していません）
+  ## �G�X�P�[�v�̗��p�i�{���ɂ͌f�ڂ��Ă��܂���j
   (x <- c("AA","B.", "C\\C"))
   grep(".", x, value = TRUE)
   grep("\\.", x, value = TRUE)
 
 
-jp <- "山本"
-#  Windowsでの文字コードはCP932
+jp <- "�R�{"
+#  Windows�ł̕����R�[�h��CP932
 charToRaw(jp)
 
-# ところが文字コードがUTF-8に変換される
-(jp2 <- gsub("山","川",jp))
+# �Ƃ��낪�����R�[�h��UTF-8�ɕϊ������
+(jp2 <- gsub("�R","��",jp))
 charToRaw(jp2)
 
-#  を指定するとCP932として処理される
-(jp3 <- gsub("山","川",jp,fixed = TRUE))
+#  ���w�肷���CP932�Ƃ��ď��������
+(jp3 <- gsub("�R","��",jp,fixed = TRUE))
 charToRaw(jp3)
 
 
@@ -283,10 +283,10 @@ head (alice.vec)
 
 table (alice.vec)
 
-x <- c ("納豆", "醤油")
-grep ("納", x) # R-2.15 以降  Windowsでもエラーになりません。
+x <- c ("�[��", "�ݖ�")
+grep ("�[", x) # R-2.15 �ȍ~  Windows�ł��G���[�ɂȂ�܂���B
 
-charToRaw ("納")
+charToRaw ("�[")
 charToRaw ("[")
 
 x <- c("ABC", "D3", "EF G")
@@ -295,75 +295,75 @@ grep("\\.", x)
 
 
 
-  ## ----- SECTION 041 文字列を指定したパターンで置換する
-jp.str <- c ("石田基広", "石田太郎", "山田太郎", "幸村幸雄")
-# 「石」を「山」に置換
-sub ("石", "山", jp.str)
+  ## ----- SECTION 041 ��������w�肵���p�^�[���Œu������
+jp.str <- c ("�Γc��L", "�Γc���Y", "�R�c���Y", "�K���K�Y")
+# �u�΁v���u�R�v�ɒu��
+sub ("��", "�R", jp.str)
 
-# 「石」あるいは「山」を「川」に置換
-sub ("[石山]", "川", jp.str)
+# �u�΁v���邢�́u�R�v���u��v�ɒu��
+sub ("[�ΎR]", "��", jp.str)
 
-# 「石田」あるいは「山田」を「佐藤」に置換
-sub ("石田|山田", "佐藤", jp.str)
+# �u�Γc�v���邢�́u�R�c�v���u�����v�ɒu��
+sub ("�Γc|�R�c", "����", jp.str)
 
-# 「幸」を「鈴」に置換
-sub ("幸", "鈴", jp.str)
+# �u�K�v���u��v�ɒu��
+sub ("�K", "��", jp.str)
 
-# 「幸」を「鈴」に一括置換
-gsub ("幸", "鈴", jp.str)
+# �u�K�v���u��v�Ɉꊇ�u��
+gsub ("�K", "��", jp.str)
 
 y <- "abcDA"
-# 一致したパターンを大文字に変える.  Perl互換を指定する
+# ��v�����p�^�[����啶���ɕς���.  Perl�݊����w�肷��
 gsub ("(ab)", "\\U\\1", y, perl = TRUE)
-# 最初の参照を大文字に、2つ目の参照を小文字に変える
+# �ŏ��̎Q�Ƃ�啶���ɁA2�ڂ̎Q�Ƃ��������ɕς���
 gsub ("(ab)c(DA)", "\\U\\1 \\L\\2", y, perl = TRUE)
 
 (z <- paste ("ID", 1:10, sep = ""))
-# 最後の数字を削除する
+# �Ō�̐������폜����
 gsub ("[0-9]$", "", z)
-# 2桁以上ある場合
+# 2���ȏ゠��ꍇ
 gsub ("[0-9]+$", "", z)
 
 
 
 
-  ## ----- SECTION 042  文字列の文字コードを確認する/指定の文字コード体系に変更する
+  ## ----- SECTION 042  ������̕����R�[�h���m�F����/�w��̕����R�[�h�̌n�ɕύX����
 
-#文字列の文字コードを確認。以下はWindows環境での出力
-charToRaw ("ぁあいぃうぅ")
+#������̕����R�[�h���m�F�B�ȉ���Windows���ł̏o��
+charToRaw ("������������")
 #  [1] 82 9f 82 a0 82 a2 82 a1 82 a4 82 a3
-# 2つ目の「あ」はShift-Jis(CP932)では16進法で「82 a0」
+# 2�ڂ́u���v��Shift-Jis(CP932)�ł�16�i�@�Łu82 a0�v
 
-# UTF-8での文字コード
-# 「あ」はUTF-8では16進法でe3 81 82
-# 「enc2utf8」関数で文字列の文字コードをUTF-8変換して表示
-charToRaw (enc2utf8 ("ぁあいぃうぅ") )
+# UTF-8�ł̕����R�[�h
+# �u���v��UTF-8�ł�16�i�@��e3 81 82
+# �uenc2utf8�v�֐��ŕ�����̕����R�[�h��UTF-8�ϊ����ĕ\��
+charToRaw (enc2utf8 ("������������") )
 
-# 指定した文字列の文字コード体系を変更する
-y <- iconv ("あ", from = "CP932", to = "UTF-8")
-# charToRaw(enc2utf8("あ") ) と同じ
-# UTF-8での文字コードに変換されている
+# �w�肵��������̕����R�[�h�̌n��ύX����
+y <- iconv ("��", from = "CP932", to = "UTF-8")
+# charToRaw(enc2utf8("��") ) �Ɠ���
+# UTF-8�ł̕����R�[�h�ɕϊ�����Ă���
 charToRaw (y)
 
-# Unicode(UCS-2)でのコードを確認する
-# install.packages ("Unicode") # 最初にインストールする
+# Unicode(UCS-2)�ł̃R�[�h���m�F����
+# install.packages ("Unicode") # �ŏ��ɃC���X�g�[������
 library ("Unicode")
 
-# Windowsの場合、いったんUTF-8に変換する
-y <- enc2utf8 ("あ")
-# UCS-2による「あ」のコード
+# Windows�̏ꍇ�A��������UTF-8�ɕϊ�����
+y <- enc2utf8 ("��")
+# UCS-2�ɂ��u���v�̃R�[�h
 as.u_char (utf8ToInt (y))
 
 
 
-x <- data.frame (Id = c ("もも", "くり", "かき"))
+x <- data.frame (Id = c ("����", "����", "����"))
 write.table (x, file = "x.csv", fileEncoding = "UTF-8")
 getwd()
 
-# コネクションを開く
+# �R�l�N�V�������J��
 out <- file ("utf8.csv", "w", encoding = "UTF-8")
 write.table(x, out)
-# コネクションを閉じる
+# �R�l�N�V���������
 close (out)
 
 
@@ -371,71 +371,71 @@ close (out)
 
 
 
-  ## ----- SECTION 044 因子を作成する
+  ## ----- SECTION 044 ���q���쐬����
 x <- c ("A", "B", "C")
 (x <- rep (x, 3))
-# 因子化
+# ���q��
 (y <- factor (x))
 
-# 通常の添字指定
+# �ʏ�̓Y���w��
 y [1:2]
 y [2]
 
 
-# 別ラベルを付ける
+# �ʃ��x����t����
 (y <- factor (x, label = "alphabet"))
 str (y)
-# 水準数を確認
+# ���������m�F
 nlevels (y)
 
 
-# 指定された水準数を指定の数だけ繰り返す
-(x <- gl (3, 5, labels = c ("上", "中", "下")))
+# �w�肳�ꂽ���������w��̐������J��Ԃ�
+(x <- gl (3, 5, labels = c ("��", "��", "��")))
 
-# 水準を追加する。ただし「"他"」に属するデータはない
-levels (x) <- c ("犬", "猿", "雉", "他")
+# ������ǉ�����B�������u"��"�v�ɑ�����f�[�^�͂Ȃ�
+levels (x) <- c ("��", "��", "�", "��")
 x
-# データのない水準は削除
+# �f�[�^�̂Ȃ������͍폜
 x [, drop = TRUE]
 
 
 
 
 
-  ## ----- SECTION 044  因子の水準に並び順を定義する
-# 水準が3で、それぞれ要素が5個のベクトル
-# 水準には並び順がある
-(x <- gl (3, 5, labels = c ("あ", "い", "う")) )
+  ## ----- SECTION 044  ���q�̐����ɕ��я����`����
+# ������3�ŁA���ꂼ��v�f��5�̃x�N�g��
+# �����ɂ͕��я�������
+(x <- gl (3, 5, labels = c ("��", "��", "��")) )
 levels (x)
-# 因子の並び順が分散分析などでは参照水準として利用される
+# ���q�̕��я������U���͂Ȃǂł͎Q�Ɛ����Ƃ��ė��p�����
 head (iris)
 
 
 levels (iris$Species)
 x.aov <- aov (Petal.Length ~ Species, data = iris)
-# 係数表を確認
-# この段階で参照水準（ベース）は"setosa"
+# �W���\���m�F
+# ���̒i�K�ŎQ�Ɛ����i�x�[�X�j��"setosa"
 summary.lm (x.aov)
 
-# 参照の順を変更するつもりで名前を変更しても
+# �Q�Ƃ̏���ύX�������Ŗ��O��ύX���Ă�
 levels(iris$Species) <- c("Csetosa","Bversicolor", "Avirginica")
 str(iris$Species)
 x.aov2 <- aov (Petal.Length ~ Species, data = iris)
-# 参照水準（ベース）は"setosa"のまま
+# �Q�Ɛ����i�x�[�X�j��"setosa"�̂܂�
 summary.lm (x.aov2)
 
-# 参照の先頭水準の先頭（ベース）を入れ替える
+# �Q�Ƃ̐擪�����̐擪�i�x�[�X�j�����ւ���
 iris$Species <- relevel (iris$Species, "Avirginica" )
 levels (iris$Species)
-# もう一度係数表を確認
-# 参照水準が変更されている
+# ������x�W���\���m�F
+# �Q�Ɛ������ύX����Ă���
 y.aov3 <- aov (Petal.Length ~ Species, data = iris)
 summary.lm (y.aov3)
 
-# 組み込みデータの水準を変更するとコピーが作成されている
-# コピーをいったん削除
+# �g�ݍ��݃f�[�^�̐�����ύX����ƃR�s�[���쐬����Ă���
+# �R�s�[����������폜
 rm(iris)
-# 水準を平均値の大きさで並びかえる
+# �����𕽋ϒl�̑傫���ŕ��т�����
 iris$Species <- reorder (iris$Species, iris$Sepal.Width, mean)
 levels (iris$Specie)
 
@@ -444,13 +444,13 @@ summary.lm (w.aov)
 
 
 
-  ## ----- SECTION 046  使われていない因子の水準を削除する
+  ## ----- SECTION 046  �g���Ă��Ȃ����q�̐������폜����
 
-# irisデータから「versicolor」品種を除いた部分集合を抽出
+# iris�f�[�^����uversicolor�v�i��������������W���𒊏o
 iris.sub <- iris [iris$Species != "versicolor", ]
-# しかし水準としては残っている
+# �����������Ƃ��Ă͎c���Ă���
 levels (iris.sub$Species)
-# 使われていない水準を削除
+# �g���Ă��Ȃ��������폜
 iris.sub <- droplevels (iris.sub)
 levels (iris.sub$Species)
 
@@ -459,8 +459,8 @@ levels (iris.sub$Species)
 
 
   ## ----- SECTION 047
-# 並び順とは別に大小関係がある
-# insectデータの因子水準には大小関係はない
+# ���я��Ƃ͕ʂɑ召�֌W������
+# insect�f�[�^�̈��q�����ɂ͑召�֌W�͂Ȃ�
 head (InsectSprays)
 
 levels (InsectSprays$spray)
@@ -474,7 +474,7 @@ summary.lm (ins)
 contrasts (InsectSprays$spray)
 
 
-# 大小関係を導入する
+# �召�֌W�𓱓�����
 InsectSprays$spray <- ordered (InsectSprays$spray,
 	levels = c("A", "B", "C", "D", "E", "F"))
 
@@ -493,14 +493,14 @@ contrasts (InsectSprays$spray)
 
 
 
-  ## ----- SECTION 048 因子の水準を自由に組み合わせる
+  ## ----- SECTION 048 ���q�̐��������R�ɑg�ݍ��킹��
 (a <- gl (2, 4, 8, labels = c ("treat", "ctrl")))
 (b <- gl (2, 1, 8, labels = c ("M", "F")))
-# aとbの組み合わせを作成
+# a��b�̑g�ݍ��킹���쐬
 (a.b <- interaction(a, b))
 levels (a.b)
 
-# 結合順序を替える
+# ����������ւ���
 (a.b2 <- interaction (a, b, lex.order = TRUE))
 levels (a.b2)
 
@@ -508,57 +508,57 @@ levels (a.b2)
 
 
 
-  ## ----- SECTION 049 因子の水準ごとに関数を適用する
-# 「あやめ」データ
+  ## ----- SECTION 049 ���q�̐������ƂɊ֐���K�p����
+# �u����߁v�f�[�^
 head (iris)
 
-# 「aggregate」関数はデータフレームを返す
+# �uaggregate�v�֐��̓f�[�^�t���[����Ԃ�
 (x <- aggregate (iris[1], iris[5], mean))
-# モデル式で指定する（R-3.0.0から利用可能）
+# ���f�����Ŏw�肷��iR-3.0.0���痘�p�\�j
 x <- aggregate (Sepal.Length ~ Species, data = iris, mean)
 
-# なお前節で因子の順序を変更している場合、テキストとは出力順が異なることがあります。
-#  その場合は、一時的に変更されているirisオブジェクトをもとに戻すため  rm(iris)  を実行してください。
+# �Ȃ��O�߂ň��q�̏�����ύX���Ă���ꍇ�A�e�L�X�g�Ƃ͏o�͏����قȂ邱�Ƃ�����܂��B
+#  ���̏ꍇ�́A�ꎞ�I�ɕύX����Ă���iris�I�u�W�F�N�g�����Ƃɖ߂�����  rm(iris)  �����s���Ă��������B
 
-# 複数列に適用
+# ������ɓK�p
 (x <- aggregate (iris[1:4], iris[5], mean))
-# モデル式で指定
+# ���f�����Ŏw��
 (x <- aggregate (. ~ Species, data = iris, mean))
 
 
-# 睡眠データ
+# �����f�[�^
 sleep
-attach (sleep) # データ列を登録し、個別のベクトルとして扱う
+attach (sleep) # �f�[�^���o�^���A�ʂ̃x�N�g���Ƃ��Ĉ���
 ave (extra, group)
 
-# attach せずに実行する方法
-detach(sleep) # attachを解除
-ave (extra, group) # 実行できなくなる
-with (sleep, ave (extra, group))#「with」関数を適用
+# attach �����Ɏ��s������@
+detach(sleep) # attach������
+ave (extra, group) # ���s�ł��Ȃ��Ȃ�
+with (sleep, ave (extra, group))#�uwith�v�֐���K�p
 
-# 複数の因子でグループ分け
+# �����̈��q�ŃO���[�v����
 head (CO2)
 
 levels (CO2$Type); levels (CO2$Treatment)
 
-# 「Type」,「Treatment」の組み合わせごとに平均値を求める
-# 「tapply」関数はグループ分けに利用されたオブジェクトと同じ次元の配列を返す
+# �uType�v,�uTreatment�v�̑g�ݍ��킹���Ƃɕ��ϒl�����߂�
+# �utapply�v�֐��̓O���[�v�����ɗ��p���ꂽ�I�u�W�F�N�g�Ɠ��������̔z���Ԃ�
 (z <- tapply (CO2$uptake, CO2 [c ("Type", "Treatment")], FUN = mean) )
 (y <- tapply ( iris [, 1], iris [5], mean))
 
 mode (y)
-# データフレームに変換
+# �f�[�^�t���[���ɕϊ�
 as.data.frame (as.table (y), responseName = "mean" )
 
 
-# 簡素化を抑制するとリストを返す
+# �ȑf����}������ƃ��X�g��Ԃ�
 (y2 <- tapply(iris [, 1], iris [5], mean, simplify = FALSE) )
 
 mode (y2)
 
-# 「ave」関数でデータフレームと同じ行数のベクトルとして出力
+# �uave�v�֐��Ńf�[�^�t���[���Ɠ����s���̃x�N�g���Ƃ��ďo��
 uptake.m <- ave (CO2$uptake, CO2 [c ("Type", "Treatment")], FUN = mean )
-# 水準の組み合わせに使われた添字
+# �����̑g�ݍ��킹�Ɏg��ꂽ�Y��
 index <- tapply (CO2$uptake, CO2 [c ("Type", "Treatment")] 
 index.fac <- interaction (CO2$Type, CO2$Treatment)
 
@@ -566,83 +566,83 @@ data.frame(index = index, factor = index.fac, mean = uptake.m)
 
 
 
-# chickwts データにfeed水準ごとに順位をふった列を追加
+# chickwts �f�[�^��feed�������Ƃɏ��ʂ��ӂ������ǉ�
 head(chickwts)
 chickwts$rank <- ave(chickwts$weight, chickwts$feed, FUN = rank)
 head(chickwts)
 
-# 水準の組み合わせに使われた添え字番号
+# �����̑g�ݍ��킹�Ɏg��ꂽ�Y�����ԍ�
 index <- tapply (CO2$uptake, CO2 [c ("Type", "Treatment")] )
-# 水準の組み合わせの名前を取得
+# �����̑g�ݍ��킹�̖��O���擾
 index.fac <- interaction (CO2$Type, CO2$Treatment)
 data.frame (index = index, factor = index.fac, mean = uptake.m)
 
-# 「by」関数はカテゴリごとに演算を適用する
-# 第1引数はデータフレーム、第2引数にグループ化因子を指定
+# �uby�v�֐��̓J�e�S�����Ƃɉ��Z��K�p����
+# ��1�����̓f�[�^�t���[���A��2�����ɃO���[�v�����q���w��
 (iris.by <- by (iris [1:4], iris [5], colMeans) )
 
-# 配列であることを確認
+# �z��ł��邱�Ƃ��m�F
 is.array (iris.by)
 
-## 以下は動作しない
+## �ȉ��͓��삵�Ȃ�
 # by (iris [1:4], iris [5], mean) 
 
 
 
 
 
-  ## ----- SECTION 050 論理値の基礎
+  ## ----- SECTION 050 �_���l�̊�b
 x <- c (TRUE, TRUE)
 y <- c (FALSE, FALSE)
 
-# 1と0は論理値として扱いうる
+# 1��0�͘_���l�Ƃ��Ĉ�������
 (z <- c (FALSE, TRUE, 1))
 
-# ベクトルの最初の要素だけが判定される
+# �x�N�g���̍ŏ��̗v�f���������肳���
 x || y
 
-# ベクトルの要素ごとに比較が行われる
+# �x�N�g���̗v�f���Ƃɔ�r���s����
 x | y
 x && y
 x & y
 
-# 要素数が合わない場合、短かい方がリサイクルされる
-# ただし倍数になっていない場合は警告が表示される
+# �v�f��������Ȃ��ꍇ�A�Z�����������T�C�N�������
+# �������{���ɂȂ��Ă��Ȃ��ꍇ�͌x�����\�������
 x & z
 
-!x # 論理値の反転
+!x # �_���l�̔��]
 
 
 
 
 
 
-  ## ----- SECTION 051 論理ベクトルを作成する
-# 空の論理オブジェクト
+  ## ----- SECTION 051 �_���x�N�g�����쐬����
+# ��̘_���I�u�W�F�N�g
 x <- logical (1)
 x
 mode (x)
-# 上とまったく同じ操作
+# ��Ƃ܂�������������
 (x1 <- vector ("logical", 1) )
 
 (x2 <- TRUE)
 (x3 <- T)
 (x4 <- c (TRUE, FALSE, T, F))
 
-# 0 以外の数値は「TRUE」に変換されます
+# 0 �ȊO�̐��l�́uTRUE�v�ɕϊ�����܂�
 (y <- 0:5)
 [1] 0 1 2 3 4 5
 (y2 <- as.logical (y))
 
-# 文字列は「F」と「T」を除き「NA」に強制変換されます
+# ������́uF�v�ƁuT�v�������uNA�v�ɋ����ϊ�����܂�
 (y3 <- as.logical (LETTERS))
 
 
 
 
-  ## ----- SECTION 052 論理ベクトルを計算する
+  ## ----- SECTION 052 �_���x�N�g�����v�Z����
 (x <- 1:10)
-# 論理演算の結果
+# �_�����Z�̌���
 (y <- x > 5 )
 sum (y)
 any (y)
@@ -660,9 +660,9 @@ which (y)
 
 
 
-  ## ----- SECTION 053 空のベクトルを初期化する
+  ## ----- SECTION 053 ��̃x�N�g��������������
 
-# 空のベクトルを初期化
+# ��̃x�N�g����������
 x <- vector ()
 length( x )
 mode (x)
@@ -676,22 +676,22 @@ is.null (x)
 (y <- vector ("complex", 3))
 (y <- vector ("raw", 3))
 
-# 初期化の効率性
-# 正規分布に従う乱数を用意
+# �������̌�����
+# ���K���z�ɏ]��������p��
 tmp <- rnorm (10000)
 
-# 代入用のベクトルを用意。初期の要素数は1個
+# ����p�̃x�N�g����p�ӁB�����̗v�f����1��
 z1 <- 0.0
 
-# 代入のたびにベクトルを拡張する
+# ����̂��тɃx�N�g�����g������
 system.time (
  for(i in seq_along (tmp)){
   z1 [i] <- tmp [i]
  }
 )
-# 実行結果は環境によって異なります
+# ���s���ʂ͊��ɂ���ĈقȂ�܂�
 
-# 生成した乱数と同じサイズのベクトルを用意
+# �������������Ɠ����T�C�Y�̃x�N�g����p��
 z2 <- vector ("double", length (tmp))
 
 system.time (
@@ -703,24 +703,24 @@ system.time (
 
 
 
-  ## ----- SECTION 054 ベクトルの要素数を取得・変更する
+  ## ----- SECTION 054 �x�N�g���̗v�f�����擾�E�ύX����
 (x <- 1:5) 
 length (x)
 
-# 要素数を広げる
+# �v�f�����L����
 length (x) <- 10
 x
-# 要素数を切り詰める
+# �v�f����؂�l�߂�
 length (x) <- 6
 x
 
 
 
 
-  ## ----- SECTION 055  ベクトルの要素に名前を付ける
+  ## ----- SECTION 055  �x�N�g���̗v�f�ɖ��O��t����
 (x <- 1:5)
 (names (x) <- LETTERS [1:5])
-# 「B」という名前の付いた要素
+# �uB�v�Ƃ������O�̕t�����v�f
 x [names (x) == "B"]
 
 
@@ -730,51 +730,51 @@ x <- 1:5
 y <- 5:9
 
 (names (y) <- LETTERS [5:9])
-# 名前付きオブジェクトの演算
+# ���O�t���I�u�W�F�N�g�̉��Z
 x + y
-# 最初のベクトルの名前だけが使われる
+# �ŏ��̃x�N�g���̖��O�������g����
 
 
 
 
 
 
-  ## ----- SECTION 056  ベクトルから要素を抽出する
-# 添字を使って抽出
+  ## ----- SECTION 056  �x�N�g������v�f�𒊏o����
+# �Y�����g���Ē��o
 x <- LETTERS
-x [1:10] # 最初から10個を抽出
+x [1:10] # �ŏ�����10�𒊏o
 
 x [c (1, 3, 5)]
-# アルファベットを一つおきに取り出す
+# �A���t�@�x�b�g��������Ɏ��o��
 x [seq (1, 26, 2)]
 
-# 指定された添字の要素置換
+# �w�肳�ꂽ�Y���̗v�f�u��
 (x[1:5] <- letters [1:5])
 x
 
-# 指定された添字の要素を除外
+# �w�肳�ꂽ�Y���̗v�f�����O
 x <- x [-(1:15)]
 x
 
-#  連番ではない場合の削除方法
+#  �A�Ԃł͂Ȃ��ꍇ�̍폜���@
 (x <- x [ -c(2,4,6,8,10)])
 
-# x を数値ベクトルに変更
+# x �𐔒l�x�N�g���ɕύX
 x <- -5:5
 length(x)
 
-# 条件指定で抽出
+# �����w��Œ��o
 x [x > 0]
-# 論理演算子「&」と「|」を使う
+# �_�����Z�q�u&�v�Ɓu|�v���g��
 x [x < -2 & x > 2 ]
 x [x < -3 | x > 3 ]
 
-# 条件によって値を変える
+# �����ɂ���Ēl��ς���
 x [x < 0 ] <- NA
 x
 
 
-# [ ]演算子を使う
+# [ ]���Z�q���g��
 z <- 1:5
 names (z) <- LETTERS [1:5]
 z
@@ -787,15 +787,15 @@ z [ names (z) == "B" ]
 
 names (z) == "B"
 
-# BかDという名前がついた要素を出したい（意図した結果にならない例）
+# B��D�Ƃ������O�������v�f���o�������i�Ӑ}�������ʂɂȂ�Ȃ���j
 z [names (z) == c ("B", "D")]
 
-# %in%演算子を使う
+# %in%���Z�q���g��
 z [names (z) %in% c ("B", "D")]
 names (z) %in% c ("B", "D")
 
 z [ !(names (z) %in% c ("B", "D"))]
-## z [ !names (z) %in% c ("B", "D") ]#丸括弧を省略
+## z [ !names (z) %in% c ("B", "D") ]#�ۊ��ʂ��ȗ�
 
 x <- c(TRUE, FALSE)
 y <- c(TRUE, TRUE)
@@ -806,17 +806,17 @@ y <- c(TRUE, TRUE)
 
 
 
-  ## ----- SECTION 057 ベクトルから条件に適合する添字を取得する
+  ## ----- SECTION 057 �x�N�g����������ɓK������Y�����擾����
 (x <- rep (c (TRUE, FALSE), 3))
-# 要素にTRUEが1つでも含まれるか
+# �v�f��TRUE��1�ł��܂܂�邩
 any (x == TRUE)
-# 要素がTRUEの添字番号
+# �v�f��TRUE�̓Y���ԍ�
 which (x == TRUE)
 
-# アルファベット「K」を含む要素番号
+# �A���t�@�x�b�g�uK�v���܂ޗv�f�ԍ�
 which (LETTERS == "K")
 
-# 最大値最小値の添字
+# �ő�l�ŏ��l�̓Y��
 y <- 5:10
 which.max (y)
 which.min (y)
@@ -824,17 +824,17 @@ which.min (y)
 
 
 
-  ## ----- SECTION 058 ベクトルの要素を並べ替える
-# 1から10をランダムに並べたベクトル
-# ここでは乱数の種を指定します
+  ## ----- SECTION 058 �x�N�g���̗v�f����בւ���
+# 1����10�������_���ɕ��ׂ��x�N�g��
+# �����ł͗����̎���w�肵�܂�
 set.seed (1)
 (x <- sample (10) )
-# ソートされていないか
+# �\�[�g����Ă��Ȃ���
 is.unsorted (x)
-# ソートする
+# �\�[�g����
 sort (x)
 
-sort (x, decreasing = TRUE) # 降順
+sort (x, decreasing = TRUE) # �~��
 rank (x)
 
 set.seed (2)
@@ -844,36 +844,36 @@ sort (z) [9] ; sort (z) [11]
 
 set.seed (2)
 (z <- sample (20) )
-# 通常のソート
+# �ʏ�̃\�[�g
 sort (z)
-# もとベクトルをソートした時に9番目の値を基準に前後に振り分け
+# ���ƃx�N�g�����\�[�g��������9�Ԗڂ̒l����ɑO��ɐU�蕪��
 sort.int (z, partial = 9 )
-# 9番目と11番目の値を基準に前後に振り分け
+# 9�Ԗڂ�11�Ԗڂ̒l����ɑO��ɐU�蕪��
 sort.int (z, partial = c (9,11) )
-# 9番目と18番目の値を基準に前後に振り分け
+# 9�Ԗڂ�18�Ԗڂ̒l����ɑO��ɐU�蕪��
 sort.int (z, partial = c(9,18) )
 
 set.seed (1)
 (x <- sample (10) )
-# 昇順に並べ替えた場合の添字
+# �����ɕ��בւ����ꍇ�̓Y��
 order (x)
 sort.list (x)
-# 添字を使って並べ替える「sort(x)」に同じ
+# �Y�����g���ĕ��בւ���usort(x)�v�ɓ���
 x [order(x)]
 
 
 
 
-  ## ----- SECTION 059  ベクトルの要素を置き換える
+  ## ----- SECTION 059  �x�N�g���̗v�f��u��������
 (x <- c (1:5, NA))
-# 3番目の要素を30に置き換える
+# 3�Ԗڂ̗v�f��30�ɒu��������
 replace (x, 3, 30)
-# 2番目と3番目をそれぞれ置き換える
+# 2�Ԗڂ�3�Ԗڂ����ꂼ��u��������
 y <- replace (x, c (2, 3), c (20, 30))
 y
 
-# 添字を使って置き換える
-# この場合も、ベクトルが変更される
+# �Y�����g���Ēu��������
+# ���̏ꍇ���A�x�N�g�����ύX�����
 x [c (2, 3)] <- c (22, 33)
 x
 
@@ -886,44 +886,44 @@ replace (x, is.na (x), 0)
 
 
 
-  ## ----- SECTION 060 ベクトルに要素を追加する
+  ## ----- SECTION 060 �x�N�g���ɗv�f��ǉ�����
 (x <- 1:5)
-# 末尾に結合
+# �����Ɍ���
 (y <- c (x, 7:10))
-# 5番めの直後に6を挿入
+# 5�Ԃ߂̒����6��}��
 (z <- append (y, after = 5, 6))
 
-# 3番目の後に333と888をそれぞれ挿入
+# 3�Ԗڂ̌��333��888�����ꂼ��}��
 (z <- append (y, after = 3, c(333, 888)))
 
 
 
 
-  ## ----- SECTION 061 ベクトルの要素の重複を調べる
+  ## ----- SECTION 061 �x�N�g���̗v�f�̏d���𒲂ׂ�
 (x <- c (1:5, 3:7, 5:10))
 (y <- duplicated (x))
-# 重複している場所
+# �d�����Ă���ꏊ
 which (y)
-# 重複出現している要素
+# �d���o�����Ă���v�f
 x [y]
 
 
 z <- c (1, 2, 2, 2, 5, 5, 5, 5, 8, 2)
-# 同じ数値が繰り返される回数
+# �������l���J��Ԃ�����
 (z1 <- rle (z))
 
-# 復元する
+# ��������
 (inverse.rle (z1))
 
 
 
 
 
-  ## ----- SECTION 062  ベクトルの要素の重複を削除する
+  ## ----- SECTION 062  �x�N�g���̗v�f�̏d�����폜����
 x <- c (1, 2, 2, 2, 5, 5, 5, 5, 8, 2)
 unique (x)
 
-# 削除対象から一部の要素を外す
+# �폜�Ώۂ���ꕔ�̗v�f���O��
 unique (x, incomparables = 2 )
 
 
